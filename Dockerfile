@@ -10,6 +10,9 @@ RUN sed -i \
 	-e 's/^#\(LoadModule .*mod_headers.so\)/\1/' \
 	conf/httpd.conf
 
-COPY httpd-vhosts.conf /usr/local/apache2/conf/extra/httpd-vhosts.conf
+RUN echo "\n\nInclude conf/local-vhosts.conf\n" >> conf/httpd.conf
 
-CMD  [ "httpd", "-D", "FOREGROUND", "-X", "-e","debug"]
+COPY local-vhosts.conf /usr/local/apache2/conf/local-vhosts.conf
+
+#CMD  [ "httpd", "-D", "FOREGROUND", "-X", "-e","debug"]
+CMD  [ "httpd", "-D", "FOREGROUND" ]
